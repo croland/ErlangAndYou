@@ -3,7 +3,6 @@
 -behaviour(wx_object).
 
 -export([new/2, show/1, destroy/1]).
--export([start/0, start/1, start_link/0, start_link/1]).
 -export([init/1, terminate/2, code_change/3, handle_info/2, handle_call/3, handle_cast/2, handle_event/2, handle_sync_event/3]).
 
 -include_lib("wx/include/wx.hrl").
@@ -11,19 +10,6 @@
 -record(state, {parent, config, win, pen, brush, font }).
 
 
-
-start() ->
-	start([]).
-
-start(Config) ->
-	wx_object:start(?MODULE, Config, []).
-
-
-start_link() ->
-	start_link([]).
-
-start_link(Config) ->
-	wx_object:start_link(?MODULE, Config, []).
 
 init(Config) ->
 	wx:new(Config),
@@ -45,6 +31,14 @@ do_init(Config) ->
 	wxPanel:setSizer(Panel, MainSizer),
 	{Panel, #state{parent=Panel, config=Config, win=Win, pen=Pen, brush=Brush, font=Font}}.
 
+destroy(X) ->
+  ok.
+
+new(X, Y) ->
+  ok.
+
+show(X) ->
+  ok.
 
 handle_sync_event(#wx{event = #wxPaint{}},_,#state{win=Win, pen=Pen, brush=Brush, font=Font}) ->
 	DC = wxPaintDC:new(Win),
