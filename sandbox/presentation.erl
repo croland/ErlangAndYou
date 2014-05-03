@@ -3,7 +3,7 @@
 -behaviour(wx_object).
 
 -export([new/2, show/1, destroy/1]).
--export([init/1, terminate/2, code_change/3, handle_info/2, handle_call/3, handle_cast/2, handle_event/2, handle_sync_event/3]).
+-export([start/1, init/1, terminate/2, code_change/3, handle_info/2, handle_call/3, handle_cast/2, handle_event/2, handle_sync_event/3]).
 
 -include_lib("wx/include/wx.hrl").
 
@@ -30,6 +30,9 @@ do_init(Config) ->
 	wxSizer:add(MainSizer, Sizer, [{flag, ?wxEXPAND}, {proportion, 1}]),
 	wxPanel:setSizer(Panel, MainSizer),
 	{Panel, #state{parent=Panel, config=Config, win=Win, pen=Pen, brush=Brush, font=Font}}.
+
+start(Config) ->
+  wx_object:start_link(?MODULE, Config, []).
 
 destroy(X) ->
   ok.
